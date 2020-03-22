@@ -1,0 +1,32 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "frontend for feblr",
+  "main": "index.js",
+  "directories": {
+    "test": "spago test"
+  },
+  "scripts": {
+    "dev": "spago build --watch & parcel index.html",
+    "build": "parcel build index.html",
+    "test": "spago test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacobChang/Feblr.git"
+  },
+  "author": "Jacob Chang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JacobChang/Feblr/issues"
+  },
+  "homepage": "https://github.com/JacobChang/Feblr#readme",
+  "dependencies": {
+    "parcel": "^2.0.0-alpha.3.2",
+    "purescript": "^0.13.6",
+    "spago": "^0.14.0"
+  },
+  "devDependencies": {
+    "sass": "^1.26.3"
+  }
+}
