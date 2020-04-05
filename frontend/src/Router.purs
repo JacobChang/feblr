@@ -3,24 +3,30 @@ module Router where
 import Prelude
 
 import Control.Alternative ((<|>))
-import Routing.Match (Match, lit)
+import Data.Either (Either(..))
+import Routing (match)
+import Routing.Match (Match, end, lit)
 
 data Page
-  = Home
+  = NotFound
+  | Home
   | Join
   | Profile
 
-root :: Match Unit
-root = lit ""
-
 matchHome :: Match Page
-matchHome = Home <$ root
+matchHome = Home <$ (lit "" <* end)
 
 matchJoin :: Match Page
-matchJoin = Join <$ (root *> lit "join")
+matchJoin = Join <$ (lit "" <* lit "join")
 
 matchProfile :: Match Page
-matchProfile = Profile <$ (root *> lit "profile")
+matchProfile = Profile <$ (lit "" <* lit "profile")
 
 router :: Match Page
 router = matchHome <|> matchJoin <|> matchProfile
+
+parse :: String -> Page
+parse url =
+  case match router url of
+    Left err -> NotFound
+    Right page -> page

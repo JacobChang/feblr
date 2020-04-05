@@ -1,5 +1,84 @@
+@import './theme.scss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
+
+  font-size: 18px;
 }
+
+.page__header {
+  background-color: white;
+}
+
+.page__title {
+  font-size: 1.25rem;
+}
+
+.content {
+  display: flex;
+  margin: 0 auto;
+
+  width: 100%;
+  max-width: 48rem;
+}
+
+.flex__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: block;
+}
+
+.form__title {
+  text-align: center;
+}
+
+.form__field {
+  margin: 1rem 0 0 0;
+}
+
+.form__submit {
+  margin: 1.5rem 0 0 0;
+}
+
+.form__field .form__control,
+.form__submit .form__control {
+  padding: 0.5rem;
+
+  width: 100%;
+}
+
+.button {
+  padding: 0.5rem;
+}
+
+.button.button--primary {
+  border: 1px color $primary;
+
+
+  &.button--solid {
+    color: white;
+
+    background-color: $primary;    
+  }
+
+  &.button--outline {
+    color: $primary;
+
+    background-color: white;
+  }
+}
+
+@import "./home.scss";
+@import "./join.scss";

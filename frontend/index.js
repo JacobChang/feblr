@@ -5,7 +5,13 @@ function main () {
 }
 
 if (module.hot) {
-  module.hot.accept(function () {
+  module.hot.dispose(function() {
+    console.log("dispose");
+  });
+
+  module.hot.accept(function() {
+    console.log("accept");
+    document.body.innerHTML = ''
     main();
   });
 }
