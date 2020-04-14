@@ -1,0 +1,20 @@
+source https://api.nuget.org/v3/index.json
+
+storage: none
+framework: netcore3.1, netstandard2.0, netstandard2.1
+
+group Engine
+    source https://api.nuget.org/v3/index.json
+    nuget FSharp.Core
+    nuget TaskBuilder.fs
+    nuget Microsoft.Extensions.Logging
+    nuget Microsoft.Orleans.Server
+    nuget Microsoft.Orleans.OrleansCodeGenerator
+    nuget Microsoft.Orleans.Core.Abstractions
+    nuget Microsoft.Orleans.Client
+
+group Server
+    source https://api.nuget.org/v3/index.json
+    nuget FSharp.Core
+    nuget Giraffe
+    nuget Thoth.Json.Giraffe

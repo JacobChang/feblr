@@ -2,12 +2,12 @@ name:                backend
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/githubuser/backend#readme
+homepage:            https://github.com/JacobChang/Feblr#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2020 Author name here
+author:              Jacob Chang
+maintainer:          mrchangji@outlook.com
+copyright:           2020 Jacob Chang
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
@@ -46,4 +46,4 @@ test-suite backend-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/backend
+  location: https://github.com/JacobChang/Feblr
