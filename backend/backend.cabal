@@ -16,8 +16,12 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Lib
+  other-modules:       Handlers.Join
+                     , Cache.Client
   build-depends:       base >= 4.7 && < 5
                      , aeson
+                     , servant
+                     , servant-client
                      , servant-server
                      , wai
                      , warp
