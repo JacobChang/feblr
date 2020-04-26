@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeOperators   #-}
+
 module Lib
     ( startApp
     , app
@@ -12,29 +13,26 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import Servant
 import qualified Handlers.Join as Join
+import Config (listenPort, backend, info, Info, Config)
 
-data Backend = Backend
-  { backendName     :: String
-  , backendVersion  :: String
-  } deriving (Eq, Show)
+index :: Config -> Info
+index cfg = info cfg
 
-$(deriveJSON defaultOptions ''Backend)
-
-backend :: Backend
-backend = Backend "Feblr Backend" "0.0.1"
-
-type API = Get '[JSON] Backend
+type API = Get '[JSON] Info
       :<|> Join.API
 
-startApp :: IO ()
-startApp = run 8080 app
+startApp :: Config -> IO ()
+startApp cfg =
+  run port (app cfg)
+  where
+    port = fromIntegral $ listenPort (backend cfg)
 
-app :: Application
-app = serve api server
+app :: Config -> Application
+app cfg = serve api (server cfg)
 
 api :: Proxy API
 api = Proxy
 
-server :: Server API
-server = return backend
-    :<|> Join.server
+server :: Config -> Server API
+server cfg = return (index cfg)
+        :<|> Join.server
