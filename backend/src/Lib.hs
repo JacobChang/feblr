@@ -36,15 +36,5 @@ api :: Proxy API
 api = Proxy
 
 server :: Server API
-<<<<<<< HEAD
-server = return users
-
-users :: [User]
-users = [ User 1 "Isaac" "Newton"
-        , User 2 "Albert" "Einstein"
-        ]
-=======
 server = return backend
     :<|> Join.server
-
->>>>>>> update
