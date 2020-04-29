@@ -18,3 +18,6 @@ group Server
     nuget FSharp.Core
     nuget Giraffe
     nuget Thoth.Json.Giraffe
+    nuget Microsoft.Extensions.Configuration
+    nuget Microsoft.Extensions.Configuration.Binder
+    nuget Microsoft.Extensions.Configuration.Json

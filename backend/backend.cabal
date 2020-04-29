@@ -21,12 +21,16 @@ library
                      , Handlers.Join
   build-depends:       base >= 4.7 && < 5
                      , aeson
+                     , bytestring
                      , dhall
                      , http-client
+                     , postgresql-simple
                      , resource-pool
                      , servant
                      , servant-client
                      , servant-server
+                     , transformers
+                     , utf8-string
                      , wai
                      , warp
   default-language:    Haskell2010

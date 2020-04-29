@@ -2,3 +2,6 @@ group Server
     FSharp.Core
     Giraffe
     Thoth.Json.Giraffe
+    Microsoft.Extensions.Configuration
+    Microsoft.Extensions.Configuration.Binder
+    Microsoft.Extensions.Configuration.Json

@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeOperators   #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 module Handlers.Join
     ( API
@@ -11,45 +12,50 @@ import Data.Aeson
 import Data.Aeson.TH
 import Network.Wai
 import Network.Wai.Handler.Warp
+import Data.Pool
+import Database.PostgreSQL.Simple
+import Control.Monad.IO.Class
 import Servant
+import Servant.Client
 import Cache.Client
+import Config
 
 data JoinPrepareRequest = JoinPrepareRequest
-  { joinPrepareEmail :: String
+  { email :: String
   } deriving (Eq, Show)
 
 $(deriveJSON defaultOptions ''JoinPrepareRequest)
 
-data JoinPrepareResponse = JoinPrepareResponse
-  { provider :: String }
-
-$(deriveJSON defaultOptions ''JoinPrepareResponse)
-
 data JoinConfirmRequest = JoinConfirmRequest
-  { joinConfirmEmail :: String
-  , joinConfirmCode  :: String
+  { email :: String
+  , token :: String
   } deriving (Eq, Show)
 
 $(deriveJSON defaultOptions ''JoinConfirmRequest)
 
-data JoinConfirmResponse = JoinConfirmResponse
-  { token :: String }
-
-$(deriveJSON defaultOptions ''JoinConfirmResponse)
-
-type API = "join" :> "request"
+type API = "api" :> "v1" :> "join" :> "request"
                   :> ReqBody '[JSON] JoinPrepareRequest
-                  :> Post '[JSON] JoinPrepareResponse
-      :<|> "join" :> "confirm"
+                  :> PostCreated '[JSON] ()
+      :<|> "api" :> "v1" :> "join" :> "confirm"
                   :> ReqBody '[JSON] JoinConfirmRequest
-                  :> Post '[JSON] JoinConfirmResponse
+                  :> Post '[JSON] ()
 
-server :: Server API
-server = prepare :<|> confirm
+server :: Config -> Pool Connection -> Server API
+server cfg connPool = prepare :<|> confirm
   where
-    prepare :: JoinPrepareRequest -> Handler JoinPrepareResponse
-    prepare request =
-      return (JoinPrepareResponse "")
+    prepare :: JoinPrepareRequest -> Handler ()
+    prepare request = do
+      res <- liftIO $ runCacheClient (cacheServer cfg) query
+      respond res
+      where
+        query = createToken (CreateTokenRequest (email (request::JoinPrepareRequest)))
+        respond :: Either ClientError () -> Handler ()
+        respond res =
+          case res of
+            Left error ->
+              throwError err500
+            Right res ->
+              return ()
 
-    confirm :: JoinConfirmRequest -> Handler JoinConfirmResponse
-    confirm request = return (JoinConfirmResponse "")
+    confirm :: JoinConfirmRequest -> Handler ()
+    confirm request = return ()

@@ -3,3 +3,6 @@ paket-files
 packages
 obj
 bin
+appsettings.json
+appsettings.Development.json
+appsettings.Staging.json

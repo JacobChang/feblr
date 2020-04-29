@@ -21,6 +21,7 @@ let webApp =
     [ GET >=> route "/apps" >=> Client.queryApps
       POST >=> route "/apps" >=> Client.createApp
       DELETE >=> routef "/apps/%d" Client.deleteApp
+      POST >=> route "/"
       GET >=> routef "/apps/%d/features" App.queryFeatures
       POST >=> routef "/apps/%d/features" App.createFeature
       DELETE >=> routef "/apps/%d/features/%d" App.deleteFeature
@@ -60,7 +61,7 @@ let main _ =
       .ConfigureWebHostDefaults(fun webHostBuilder ->
         webHostBuilder
           .UseKestrel()
-          .UseUrls("http://localhost:6060")
+          .UseUrls("http://localhost:9090")
           .Configure(Action<IApplicationBuilder> configureApp)
           .ConfigureServices(configureServices)
           .ConfigureLogging(configureLogging)

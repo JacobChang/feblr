@@ -30,7 +30,9 @@ data Postgres = Postgres
 instance FromDhall Postgres
 
 data CacheServer = CacheServer
-  { addr :: String
+  { protocol :: String
+  , host :: String
+  , port :: Natural
   , clientId :: String
   , clientSecret :: String }
   deriving (Generic, Show)
